@@ -1,0 +1,113 @@
+{
+	"geode": "3.9.0",
+	"gd": {
+		"win": "2.206",
+		"android": "2.206",
+		"mac": "2.206",
+		"ios": "2.206"
+	},
+	"id": "alphalaneous.level_info_backgrounds",
+	"name": "Level Info Backgrounds",
+	"version": "v1.0.0",
+	"developer": "Alphalaneous",
+	"description": "Adds backgrounds to level info.",
+	"links": {
+        "homepage": "https://twitter.com/alphalaneous",
+        "source": "https://github.com/Alphalaneous/Level-Info-Backgrounds",
+        "community": "https://discord.gg/Txn2CA5dHF"
+    },
+	"tags": ["interface", "enhancement"],
+	"settings": {
+		"general-settings": {
+			"type": "title",
+			"name": "General Settings"
+		},
+		"always-default": {
+			"type": "bool",
+			"default": false,
+			"name": "Always Default",
+			"description": "Make the scrolling background always blue and default."
+		},
+		"hide-ground": {
+			"type": "bool",
+			"default": false,
+			"name": "Hide Ground",
+			"description": "Hide the ground."
+		},
+		"stationary-platformer": {
+			"type": "bool",
+			"default": false,
+			"name": "Stationary for Platformer",
+			"description": "Makes the background and ground not move on platformer levels."
+		},
+		"always-stationary": {
+			"type": "bool",
+			"default": false,
+			"name": "Always Stationary",
+			"description": "Makes the background and ground not move."
+		},
+		"brightness-max": {
+			"type": "float",
+			"default": 0.75,
+			"min": 0,
+			"max": 1,
+			"name": "Brightness Max (0.0 - 1.0)",
+			"description": "How bright the background can be.",
+			"control": {
+				"arrows": true,
+				"arrow-step": 0.05,
+				"slider": true,
+				"slider-step": 0.05
+			}
+		},
+		"brightness-min": {
+			"type": "float",
+			"default": 0,
+			"min": 0,
+			"max": 1,
+			"name": "Brightness Min (0.0 - 1.0)",
+			"description": "How dark the background can be.",
+			"control": {
+				"arrows": true,
+				"arrow-step": 0.05,
+				"slider": true,
+				"slider-step": 0.05
+			}
+		},
+		"color-settings": {
+			"type": "title",
+			"name": "Color Settings",
+			"enable-if": "always-default"
+		},
+		"background-color": {
+			"type": "rgb",
+			"name": "Background Color",
+			"default": [40, 125, 255],
+			"enable-if": "always-default"
+		},
+		"ground1-color": {
+			"type": "rgb",
+			"name": "Ground 1 Color",
+			"default": [0, 102, 255],
+			"enable-if": "always-default"
+		},
+		"ground2-color": {
+			"type": "rgb",
+			"name": "Ground 2 Color",
+			"default": [0, 102, 255],
+			"enable-if": "always-default"
+		},
+		"line-color": {
+			"type": "rgb",
+			"name": "Line Color",
+			"default": [255, 255, 255],
+			"enable-if": "always-default"
+		},
+		"line-blending": {
+			"type": "bool",
+			"default": true,
+			"name": "Line Blending",
+			"enable-if": "always-default"
+		}
+	}
+}
