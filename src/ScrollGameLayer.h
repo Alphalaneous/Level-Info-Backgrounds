@@ -13,8 +13,8 @@ class ScrollGameLayer : public CCNodeRGBA {
         CCSprite* m_line;
 
     public:
-        static ScrollGameLayer* create(GJGameLevel* level, bool fade);
-        bool init(GJGameLevel* level, bool fade);
+        static ScrollGameLayer* create(GJGameLevel* level, bool fade, ccColor3B bgColor);
+        bool init(GJGameLevel* level, bool fade, ccColor3B bgColor);
         CCSprite* createLine(int lineID, ccColor3B color, bool blending);
         CCSprite* createRepeatingSprite(std::string texture, ccColor3B color);
 

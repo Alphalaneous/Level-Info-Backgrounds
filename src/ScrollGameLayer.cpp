@@ -1,9 +1,9 @@
 #include "ScrollGameLayer.h"
 #include "Utils.h"
 
-ScrollGameLayer* ScrollGameLayer::create(GJGameLevel* level, bool fade) {
+ScrollGameLayer* ScrollGameLayer::create(GJGameLevel* level, bool fade, ccColor3B bgColor) {
     auto ret = new ScrollGameLayer();
-    if (ret && ret->init(level, fade)) {
+    if (ret && ret->init(level, fade, bgColor)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -12,7 +12,7 @@ ScrollGameLayer* ScrollGameLayer::create(GJGameLevel* level, bool fade) {
     return ret;
 }
 
-bool ScrollGameLayer::init(GJGameLevel* level, bool fade) {
+bool ScrollGameLayer::init(GJGameLevel* level, bool fade, ccColor3B bgColorDefault) {
 
     CCSize winSize = CCDirector::get()->getWinSize();
 
@@ -22,22 +22,29 @@ bool ScrollGameLayer::init(GJGameLevel* level, bool fade) {
     setCascadeOpacityEnabled(true);
     setID("scroll-bg"_spr);
 
-    int bgID = 1;
-    int groundID = 1;
-    int lineID = 1;
+    int bgID = Mod::get()->getSettingValue<int64_t>("background-id");
+    int groundID = Mod::get()->getSettingValue<int64_t>("ground-id");
+    int lineID = Mod::get()->getSettingValue<int64_t>("line-id");
 
     ccColor3B bgColor = Mod::get()->getSettingValue<ccColor3B>("background-color");
     ccColor3B groundColor1 = Mod::get()->getSettingValue<ccColor3B>("ground1-color");
     ccColor3B groundColor2 = Mod::get()->getSettingValue<ccColor3B>("ground2-color");
+
+    if (Mod::get()->getSettingValue<bool>("override-color-default")) {
+        bgColor = bgColorDefault;
+        groundColor1 = bgColorDefault;
+        groundColor2 = bgColorDefault;
+    }
+
     ccColor3B lineColor = Mod::get()->getSettingValue<ccColor3B>("line-color");
     bool blending = Mod::get()->getSettingValue<bool>("line-blending");
 
     if (!level->m_levelString.empty()) {
-        if (!Mod::get()->getSettingValue<bool>("always-default")) {
-            auto decompressString = Utils::decodeBase64Gzip(level->m_levelString);
+        auto decompressString = Utils::decodeBase64Gzip(level->m_levelString);
+        std::string start = decompressString.substr(0, decompressString.find(';'));
+        std::map<std::string, std::string> parts = Utils::splitToMap(start, ",");
 
-            std::string start = decompressString.substr(0, decompressString.find(';'));
-            std::map<std::string, std::string> parts = Utils::splitToMap(start, ",");
+        if (!Mod::get()->getSettingValue<bool>("always-default")) {
             std::vector<std::string> colors = utils::string::split(parts["kS38"], "|");
             std::map<std::string, std::map<std::string, std::string>> colorValues;
 
@@ -51,7 +58,8 @@ bool ScrollGameLayer::init(GJGameLevel* level, bool fade) {
             groundColor2 = getColor(colorValues, "1009");
             lineColor = getColor(colorValues, "1002", false);
             blending = utils::numFromString<int>(colorValues["1002"]["5"]).unwrapOr(0);
-
+        }
+        if (!Mod::get()->getSettingValue<bool>("always-default-texture")) {
             bgID = utils::numFromString<int>(parts["kA6"]).unwrapOr(1);
             if (bgID == 0) bgID = 1;
 
@@ -63,6 +71,12 @@ bool ScrollGameLayer::init(GJGameLevel* level, bool fade) {
         }
     }
 
+    bool scaleLineVertically = false;
+    if (lineID == 3) {
+        lineID = 2;
+        scaleLineVertically = true;
+    }
+
     std::string bgTextureStr = fmt::format("game_bg_{:02}_001.png", bgID);
     std::string groundTextureStr = fmt::format("groundSquare_{:02}_001.png", groundID);
     std::string groundTextureStr2 = fmt::format("groundSquare_{:02}_2_001.png", groundID);
@@ -72,6 +86,8 @@ bool ScrollGameLayer::init(GJGameLevel* level, bool fade) {
     m_ground = createRepeatingSprite(groundTextureStr.c_str(), groundColor1);
     m_ground2 = createRepeatingSprite(groundTextureStr2.c_str(), groundColor2);
     m_line = createLine(lineID, lineColor, blending);
+
+    if (scaleLineVertically) m_line->setScaleY(2);
     
     if (!Mod::get()->getSettingValue<bool>("hide-ground")) {
         m_background->setPositionY(30);

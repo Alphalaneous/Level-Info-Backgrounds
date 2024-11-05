@@ -8,7 +8,7 @@
 	},
 	"id": "alphalaneous.level_info_backgrounds",
 	"name": "Level Info Backgrounds",
-	"version": "v1.0.0",
+	"version": "v1.0.1",
 	"developer": "Alphalaneous",
 	"description": "Adds backgrounds to level info.",
 	"links": {
@@ -16,6 +16,13 @@
         "source": "https://github.com/Alphalaneous/Level-Info-Backgrounds",
         "community": "https://discord.gg/Txn2CA5dHF"
     },
+	"dependencies": [
+        {
+            "id": "geode.node-ids",
+            "version": ">=v1.15.0",
+            "importance": "required"
+        }
+    ],
 	"tags": ["interface", "enhancement"],
 	"settings": {
 		"general-settings": {
@@ -25,8 +32,14 @@
 		"always-default": {
 			"type": "bool",
 			"default": false,
-			"name": "Always Default",
-			"description": "Make the scrolling background always blue and default."
+			"name": "Always Default Colors",
+			"description": "Make the scrolling background and ground always blue or a custom color."
+		},
+		"always-default-texture": {
+			"type": "bool",
+			"default": false,
+			"name": "Always Default Background and Ground",
+			"description": "Make the scrolling background and ground always the default or custom texture ID."
 		},
 		"hide-ground": {
 			"type": "bool",
@@ -79,6 +92,13 @@
 			"name": "Color Settings",
 			"enable-if": "always-default"
 		},
+		"override-color-default": {
+			"type": "bool",
+			"default": false,
+			"name": "Use Default Color from vanilla Background",
+			"description": "Uses the color from the vanilla background sprite, useful for mod compatibility such as \"Level Info Colors\" and \"Coloured Level Page\".",
+			"enable-if": "always-default"
+		},
 		"background-color": {
 			"type": "rgb",
 			"name": "Background Color",
@@ -108,6 +128,50 @@
 			"default": true,
 			"name": "Line Blending",
 			"enable-if": "always-default"
+		},
+		"texture-id-settings": {
+			"type": "title",
+			"name": "Texture ID Settings",
+			"enable-if": "always-default"
+		},
+		"background-id": {
+			"type": "int",
+			"default": 1,
+			"min": 1,
+			"max": 59,
+			"name": "Background ID",
+			"description": "Set background texture ID,",
+			"enable-if": "always-default-texture",
+			"control": {
+				"arrows": true,
+				"slider": false
+			}
+		},
+		"ground-id": {
+			"type": "int",
+			"default": 1,
+			"min": 1,
+			"max": 22,
+			"name": "Ground ID",
+			"description": "Set ground texture ID,",
+			"enable-if": "always-default-texture",
+			"control": {
+				"arrows": true,
+				"slider": false
+			}
+		},
+		"line-id": {
+			"type": "int",
+			"default": 1,
+			"min": 1,
+			"max": 3,
+			"name": "Line ID",
+			"description": "Set line texture ID,",
+			"enable-if": "always-default-texture",
+			"control": {
+				"arrows": true,
+				"slider": false
+			}
 		}
 	}
 }
