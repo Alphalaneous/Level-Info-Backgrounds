@@ -176,7 +176,7 @@ CCSprite* ScrollGameLayer::createRepeatingSprite(std::string texture, ccColor3B 
         spr->setZOrder(-1);
         spr->setColor(color);
 
-        ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_CLAMP};
+        ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_REPEAT, 0x2900};
         spr->getTexture()->setTexParameters(&params);
         spr->setTextureRect({0, 0, winSize.width, spr->getContentHeight()});
         return spr;
