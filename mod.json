@@ -1,14 +1,13 @@
 {
-	"geode": "3.9.0",
+	"geode": "4.0.0-alpha.1",
 	"gd": {
-		"win": "2.206",
-		"android": "2.206",
-		"mac": "2.206",
-		"ios": "2.206"
+		"win": "2.2074",
+		"mac": "2.2074",
+		"android": "2.2074"
 	},
 	"id": "alphalaneous.level_info_backgrounds",
 	"name": "Level Info Backgrounds",
-	"version": "v1.0.1",
+	"version": "v1.0.2-alpha.1",
 	"developer": "Alphalaneous",
 	"description": "Adds backgrounds to level info.",
 	"links": {
@@ -19,7 +18,7 @@
 	"dependencies": [
         {
             "id": "geode.node-ids",
-            "version": ">=v1.15.0",
+            "version": ">=v1.17.0-alpha.1",
             "importance": "required"
         }
     ],
