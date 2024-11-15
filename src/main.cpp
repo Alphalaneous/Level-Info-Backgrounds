@@ -1,6 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/LevelInfoLayer.hpp>
 #include <Geode/modify/LevelSelectLayer.hpp>
+#include <Geode/modify/BoomScrollLayer.hpp>
 #include "ScrollGameLayer.h"
 #include "Utils.h"
 
@@ -50,15 +51,17 @@ class $modify(MyLevelSelectLayer, LevelSelectLayer) {
 		
 		m_fields->m_scrollGameLayer->updateBG(m_fields->m_levelData[id]);
 	}
+};
 
-    void onNext(CCObject* sender) {
-		LevelSelectLayer::onNext(sender);
-		updateBG();
-	}
+class $modify(MyBoomScrollLayer, BoomScrollLayer) {
 
-	void onPrev(CCObject* sender) {
-		LevelSelectLayer::onPrev(sender);
-		updateBG();
+    void moveToPage(int p0) {
+		int page = m_page;
+		BoomScrollLayer::moveToPage(p0);
+		if (page == p0) return;
+		if (LevelSelectLayer* lsl = typeinfo_cast<LevelSelectLayer*>(getParent())) {
+			static_cast<MyLevelSelectLayer*>(lsl)->updateBG();
+		}
 	}
 };
 
