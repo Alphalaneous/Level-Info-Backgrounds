@@ -1,5 +1,5 @@
 {
-	"geode": "4.0.0-alpha.1",
+	"geode": "4.0.0-beta.1",
 	"gd": {
 		"win": "2.2074",
 		"mac": "2.2074",
@@ -7,11 +7,11 @@
 	},
 	"id": "alphalaneous.level_info_backgrounds",
 	"name": "Level Info Backgrounds",
-	"version": "v1.0.2-alpha.2",
+	"version": "v1.0.2",
 	"developer": "Alphalaneous",
 	"description": "Adds backgrounds to level info.",
 	"links": {
-        "homepage": "https://twitter.com/alphalaneous",
+        "homepage": "https://linktr.ee/Alphalaneous",
         "source": "https://github.com/Alphalaneous/Level-Info-Backgrounds",
         "community": "https://discord.gg/Txn2CA5dHF"
     },
