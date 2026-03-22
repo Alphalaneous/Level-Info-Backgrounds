@@ -1,3 +1,6 @@
+# 1.0.4
+- 2.2081 Support
+
 # 1.0.3
 - iOS support
 
